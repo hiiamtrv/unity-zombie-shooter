@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Game.Bullet;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.Characters
 {
@@ -15,5 +17,15 @@ namespace Game.Characters
 
         [Header("Firing")]
         public float secondsBetweenShots;
+
+        public float spreadReductionPerSec;
+        public float spreadPerShot;
+        public float maxSpreadAngle;
+
+        public float raysPerShot;
+        public float raySpreadAngle;
+        
+        [Header("Bullet Config")]
+        public BulletConfig bulletConfig;
     }
 }

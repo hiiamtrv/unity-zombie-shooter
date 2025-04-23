@@ -7,16 +7,21 @@ namespace Base.Pool
 {
     public class ObjectPool
     {
-        private List<IPoolable> idleObjects = new List<IPoolable>();
-        private HashSet<IPoolable> activeObjects = new HashSet<IPoolable>();
+        private int iterator;
+        private IPoolable[] idleObjects;
+        private HashSet<IPoolable> activeObjects;
 
         private readonly IPoolable prefab;
         private readonly bool ddol;
+        private GameObject root;
 
-        public ObjectPool(IPoolable samplePrefab, bool dontDestroyOnLoad)
+        public ObjectPool(IPoolable samplePrefab, bool dontDestroyOnLoad, int maxPooledObjects, GameObject root = null)
         {
             prefab = samplePrefab;
             ddol = dontDestroyOnLoad;
+            idleObjects = new IPoolable[maxPooledObjects];
+            activeObjects = new HashSet<IPoolable>();
+            iterator = -1;
         }
 
         public IPoolable RetrieveFromPool()
@@ -28,10 +33,15 @@ namespace Base.Pool
         {
             createdNewObject = false;
             IPoolable retrievePoolable;
-            if (idleObjects.Count <= 0)
+            if (iterator < 0)
             {
                 retrievePoolable = Object.Instantiate(prefab.gameObject, Vector3.zero, Quaternion.identity)
                     .GetComponent<IPoolable>();
+                if (root != null)
+                {
+                    SceneManager.MoveGameObjectToScene(retrievePoolable.gameObject, root.scene);
+                }
+
                 retrievePoolable.OnPoolReturn += ReturnToPool;
                 retrievePoolable.OnBeforeSpawn(false);
 
@@ -44,10 +54,9 @@ namespace Base.Pool
             }
             else
             {
-                retrievePoolable = idleObjects[idleObjects.Count - 1];
+                retrievePoolable = idleObjects[iterator--];
                 retrievePoolable.OnBeforeSpawn(true);
                 AssignReuse(retrievePoolable, autoActive);
-                idleObjects.RemoveAt(idleObjects.Count - 1);
             }
 
             activeObjects.Add(retrievePoolable);
@@ -68,28 +77,36 @@ namespace Base.Pool
         {
             if (activeObjects.Contains(obj))
             {
-                AssignIdle(obj);
                 activeObjects.Remove(obj);
+                if (iterator >= idleObjects.Length)
+                {
+                    Object.Destroy(obj.gameObject);
+                }
+                else
+                {
+                    AssignIdle(obj);
+                }
             }
         }
 
         public void Dispose()
         {
             //kill all objects even ddol
-            foreach (var obj in activeObjects.Where(obj => obj?.gameObject != null))
+            var allObjects = activeObjects.ToList();
+            allObjects.AddRange(idleObjects);
+
+            foreach (var poolable in allObjects)
             {
-                Object.Destroy(obj.gameObject);
+                if (!poolable?.gameObject) continue;
+                Object.Destroy(poolable.gameObject);
             }
 
-            foreach (var obj in idleObjects.Where(obj => obj?.gameObject != null))
-            {
-                Object.Destroy(obj.gameObject);
-            }
+            iterator = -1;
         }
 
         private void AssignIdle(IPoolable obj)
         {
-            idleObjects.Add(obj);
+            idleObjects[++iterator] = obj;
             obj.gameObject.SetActive(false);
         }
 

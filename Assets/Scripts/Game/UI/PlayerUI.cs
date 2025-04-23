@@ -13,15 +13,23 @@ namespace Game.UI
 
         [SerializeField]
         private CharacterWeaponHolder watchWeaponHolder;
+        
+        [SerializeField]
+        private LevelController levelController;
 
         [SerializeField]
         private TMP_Text playerText;
+        
+        [SerializeField]
+        private TMP_Text levelText;
 
         private float health;
         private IWeapon currentWeapon;
         private int bulletsInMag;
         private int bulletsLeft;
         private bool infiniteBullet;
+        private float reloadingPercentage;
+        private int secondsLeft;
 
         StringBuilder sb = new StringBuilder();
 
@@ -33,10 +41,17 @@ namespace Game.UI
             changed |= SetAndMarkChanged(ref bulletsInMag, currentWeapon.BulletsInMag);
             changed |= SetAndMarkChanged(ref bulletsLeft, currentWeapon.BulletsLeft);
             changed |= SetAndMarkChanged(ref infiniteBullet, currentWeapon.InfiniteBullet);
+            changed |= SetAndMarkChanged(ref reloadingPercentage, currentWeapon.GetReloadingPercentage());
 
             if (changed)
             {
                 playerText.text = RebuildSb();
+            }
+            
+            changed = SetAndMarkChanged(ref secondsLeft, Mathf.CeilToInt(levelController.LevelSeconds));
+            if (changed)
+            {
+                levelText.text = $"Stay alive in {secondsLeft}s";
             }
         }
 
@@ -45,7 +60,7 @@ namespace Game.UI
             sb.Clear()
                 .AppendJoin(" | ", health, currentWeapon.WeaponName)
                 .Append(" ");
-            
+
             if (infiniteBullet)
             {
                 sb.Append(bulletsInMag);
@@ -53,6 +68,11 @@ namespace Game.UI
             else
             {
                 sb.AppendJoin('/', bulletsInMag, bulletsLeft);
+            }
+
+            if (reloadingPercentage < 100f)
+            {
+                sb.Append($" (Reloading {reloadingPercentage}%)");
             }
 
             return sb.ToString();

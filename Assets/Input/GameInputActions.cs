@@ -82,6 +82,15 @@ namespace UnityEngine.GameInput
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dev_ReloadScene"",
+                    ""type"": ""Button"",
+                    ""id"": ""1f697ab1-bf6c-4457-af55-cdcae8420f0e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -220,7 +229,7 @@ namespace UnityEngine.GameInput
                 {
                     ""name"": """",
                     ""id"": ""d7b893a1-e572-4a36-a58e-c8fab7f92ebf"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad;Touch"",
@@ -291,6 +300,17 @@ namespace UnityEngine.GameInput
                     ""processors"": """",
                     ""groups"": ""Gamepad;Touch"",
                     ""action"": ""AutoAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1ee61d50-375f-45a7-8e3c-4e1171e82ea0"",
+                    ""path"": ""<Keyboard>/slash"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Dev_ReloadScene"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -884,6 +904,7 @@ namespace UnityEngine.GameInput
             m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
             m_Player_SwitchWeapon = m_Player.FindAction("SwitchWeapon", throwIfNotFound: true);
             m_Player_AutoAttack = m_Player.FindAction("AutoAttack", throwIfNotFound: true);
+            m_Player_Dev_ReloadScene = m_Player.FindAction("Dev_ReloadScene", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -963,6 +984,7 @@ namespace UnityEngine.GameInput
         private readonly InputAction m_Player_Reload;
         private readonly InputAction m_Player_SwitchWeapon;
         private readonly InputAction m_Player_AutoAttack;
+        private readonly InputAction m_Player_Dev_ReloadScene;
         public struct PlayerActions
         {
             private @GameInputActions m_Wrapper;
@@ -973,6 +995,7 @@ namespace UnityEngine.GameInput
             public InputAction @Reload => m_Wrapper.m_Player_Reload;
             public InputAction @SwitchWeapon => m_Wrapper.m_Player_SwitchWeapon;
             public InputAction @AutoAttack => m_Wrapper.m_Player_AutoAttack;
+            public InputAction @Dev_ReloadScene => m_Wrapper.m_Player_Dev_ReloadScene;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1000,6 +1023,9 @@ namespace UnityEngine.GameInput
                 @AutoAttack.started += instance.OnAutoAttack;
                 @AutoAttack.performed += instance.OnAutoAttack;
                 @AutoAttack.canceled += instance.OnAutoAttack;
+                @Dev_ReloadScene.started += instance.OnDev_ReloadScene;
+                @Dev_ReloadScene.performed += instance.OnDev_ReloadScene;
+                @Dev_ReloadScene.canceled += instance.OnDev_ReloadScene;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -1022,6 +1048,9 @@ namespace UnityEngine.GameInput
                 @AutoAttack.started -= instance.OnAutoAttack;
                 @AutoAttack.performed -= instance.OnAutoAttack;
                 @AutoAttack.canceled -= instance.OnAutoAttack;
+                @Dev_ReloadScene.started -= instance.OnDev_ReloadScene;
+                @Dev_ReloadScene.performed -= instance.OnDev_ReloadScene;
+                @Dev_ReloadScene.canceled -= instance.OnDev_ReloadScene;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1210,6 +1239,7 @@ namespace UnityEngine.GameInput
             void OnReload(InputAction.CallbackContext context);
             void OnSwitchWeapon(InputAction.CallbackContext context);
             void OnAutoAttack(InputAction.CallbackContext context);
+            void OnDev_ReloadScene(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

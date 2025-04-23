@@ -12,5 +12,6 @@ namespace Base.Pool
 
         public GameObject gameObject { get; }
         public bool DDOL { get; }
+        public int PoolCapacity { get; }
     }
 }

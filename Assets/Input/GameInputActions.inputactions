@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Dev_ReloadScene",
+                    "type": "Button",
+                    "id": "1f697ab1-bf6c-4457-af55-cdcae8420f0e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -196,7 +205,7 @@
                 {
                     "name": "",
                     "id": "d7b893a1-e572-4a36-a58e-c8fab7f92ebf",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad;Touch",
@@ -267,6 +276,17 @@
                     "processors": "",
                     "groups": "Gamepad;Touch",
                     "action": "AutoAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ee61d50-375f-45a7-8e3c-4e1171e82ea0",
+                    "path": "<Keyboard>/slash",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Dev_ReloadScene",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

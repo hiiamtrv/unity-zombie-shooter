@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Game.Interfaces;
 using UnityEngine;
 
@@ -12,6 +10,12 @@ namespace Game.Characters
 
         [SerializeField]
         private GameObject[] weaponGameObject;
+
+        [SerializeField]
+        private Animator animator;
+
+        [SerializeField]
+        private Transform muzzleTransform;
 
         private IWeapon[] weapons;
         private int weaponIndex;
@@ -29,18 +33,35 @@ namespace Game.Characters
             characterInput = GetComponent<ICharacterInput>();
             characterInput.ReloadWeapon += ReloadWeapon;
             characterInput.SwitchWeapon += SwitchWeapon;
+
+            foreach (var w in weapons)
+            {
+                w.ReturnWeaponTransform();
+            }
+
+            EquipCurrentWeaponModel();
         }
 
         private void OnDisable()
         {
             characterInput.ReloadWeapon -= ReloadWeapon;
             characterInput.SwitchWeapon -= SwitchWeapon;
+
+            foreach (var w in weapons)
+            {
+                w.ReturnWeaponTransform();
+            }
         }
 
         private void SwitchWeapon()
         {
             var numWeapons = weapons.Length;
+            if (numWeapons <= 1) return;
+
+            weapons[weaponIndex].ReturnWeaponTransform();
             weaponIndex = (weaponIndex + 1) % numWeapons;
+
+            EquipCurrentWeaponModel();
         }
 
         private void ReloadWeapon()
@@ -52,8 +73,15 @@ namespace Game.Characters
         {
             if (characterInput.IsAttacking)
             {
-                CurrentWeapon.TryAttack();
+                var lookDir = characterInput.AimDirection.GetValueOrDefault(transform.forward);
+                CurrentWeapon.TryAttack(muzzleTransform.position, lookDir);
             }
+        }
+
+        private void EquipCurrentWeaponModel()
+        {
+            var handTransform = animator.GetBoneTransform(HumanBodyBones.RightHand);
+            CurrentWeapon.AssignWeaponTransformOnHand(handTransform);
         }
     }
 }

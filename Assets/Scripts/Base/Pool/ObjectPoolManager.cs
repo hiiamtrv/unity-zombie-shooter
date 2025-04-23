@@ -1,10 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Base.Pool
 {
     public class ObjectPoolManager : MonoBehaviour
     {
+        [SerializeField]
+        private bool flushGlobalPool;
+
+        private bool isApplicationQuit;
+
         private Dictionary<IPoolable, ObjectPool> localPool = new Dictionary<IPoolable, ObjectPool>();
         private static Dictionary<IPoolable, ObjectPool> globalPool = new Dictionary<IPoolable, ObjectPool>();
 
@@ -14,7 +20,8 @@ namespace Base.Pool
             if (globalPool.TryGetValue(sample, out pool) || localPool.TryGetValue(sample, out pool)) return pool;
 
             var ddol = forceCreateDDOl ?? sample.DDOL;
-            pool = new ObjectPool(sample, ddol);
+            var spawnRootIfNotDDOL = ddol ? null : gameObject;
+            pool = new ObjectPool(sample, ddol, sample.PoolCapacity, spawnRootIfNotDDOL);
             if (ddol)
             {
                 globalPool.Add(sample, pool);
@@ -25,6 +32,11 @@ namespace Base.Pool
             }
 
             return pool;
+        }
+
+        private void OnApplicationQuit()
+        {
+            isApplicationQuit = true;
         }
 
         public void FlushLocalPools()
@@ -40,6 +52,14 @@ namespace Base.Pool
             foreach (var pool in globalPool.Values)
             {
                 pool.Dispose();
+            }
+        }
+
+        public void ReturnGlobalPools()
+        {
+            foreach (var pool in globalPool.Values)
+            {
+                pool.ReturnAll();
             }
         }
     }

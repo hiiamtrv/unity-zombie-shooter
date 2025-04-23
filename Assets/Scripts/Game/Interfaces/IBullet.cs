@@ -1,7 +1,9 @@
-﻿namespace Game.Interfaces
+﻿using Game.Bullet;
+
+namespace Game.Interfaces
 {
     public interface IBullet
     {
-        public void SetupBullet();
+        public void SetupBullet(BulletConfig bulletCfg);
     }
 }

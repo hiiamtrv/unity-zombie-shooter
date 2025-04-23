@@ -15,5 +15,15 @@ MonoBehaviour:
   magazineSize: 30
   initialBullets: 0
   infiniteBullet: 1
-  secondsReload: 3
+  secondsReload: 4
   secondsBetweenShots: 0.2
+  spreadReductionPerSec: 1
+  spreadPerShot: 1
+  maxSpreadAngle: 10
+  raysPerShot: 1
+  raySpreadAngle: 0
+  bulletConfig:
+    damage: 25
+    critRate: 30
+    critMultiplier: 2
+    maxFlyDistance: 1000

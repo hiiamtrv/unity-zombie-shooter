@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - FxTemporaire
+  - CinemachineTarget
   layers:
   - Default
   - TransparentFX
@@ -12,12 +14,12 @@ TagManager:
   - Water
   - UI
   - Environment
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - PlayerDmgSource
+  - EnemyDmgSource
+  - Enemy
+  - Player
+  - Aimpoint
+  - EnvironmentAimable
   - 
   - 
   - 

@@ -56,7 +56,7 @@ namespace Game.Characters.Zombie
                             .Do(() => ZombieAgentCallables.MoveToPoint(agent, playerCol.transform.position, agentConfig.attackRange))
                             .Do(() =>
                                 {
-                                    agent.SetDestination(agent.transform.position);
+                                    agent.isStopped = true;
                                     input.SetAttacking(true);
                                     return TaskStatus.Success;
                                 })

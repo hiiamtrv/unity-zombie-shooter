@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Audio;
 using Game.Interfaces;
 using Game.Utils;
 using UnityEngine;
@@ -13,6 +14,9 @@ namespace Game.Characters
 
         [SerializeField]
         private GameLayerConfig hitMask;
+
+        [SerializeField]
+        private AudioClip hitSound;
 
         private float attackCooldown = 0;
 
@@ -32,6 +36,8 @@ namespace Game.Characters
                 var damage = config.damageConfig.GetDamage();
                 damageable.DoDamage(damage, gameObject);
             }
+            
+            AudioSystem.PlaySound(hitSound);
         }
 
         private void Update()

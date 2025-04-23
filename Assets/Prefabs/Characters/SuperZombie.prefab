@@ -158,7 +158,7 @@ MonoBehaviour:
         m_CallState: 2
   disposeStartDelay: 1
   disposeTime: 3
-  maxPooledObjects: 32
+  maxPooledObjects: 4
 --- !u!114 &9099300848768612408
 MonoBehaviour:
   m_ObjectHideFlags: 0

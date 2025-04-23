@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireVelocity: {x: 0, y: 10, z: 20}
-  maxPooledObjects: 8
+  maxPooledObjects: 2
   damageZone: {fileID: 5594064398829535659}
   environmentLayer: {fileID: 11400000, guid: 67262d8c7fd544744b034215baa5f0c5, type: 2}
   enemyLayer: {fileID: 11400000, guid: 5db7c6e7014ebfd40be1fd059ee2e31c, type: 2}

@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 6cde670c0c4dada4d8140057f2bb8607, type: 2}
   hitMask: {fileID: 11400000, guid: 7d00b0e01d222d848900108825128521, type: 2}
+  hitSound: {fileID: 8300000, guid: 5c4381eae57bd944ebd6719976b59325, type: 3}

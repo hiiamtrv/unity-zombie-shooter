@@ -204,7 +204,7 @@ MonoBehaviour:
   onDeath:
     m_PersistentCalls:
       m_Calls: []
-  hitSound: {fileID: 0}
+  hitSound: {fileID: 8300000, guid: 889a63ca9d7127343a3c5a6a4bb18764, type: 3}
   dieSound: {fileID: 8300000, guid: 434f33aca6a59134f93e38120c74fd6c, type: 3}
 --- !u!114 &1066930213902932892
 MonoBehaviour:

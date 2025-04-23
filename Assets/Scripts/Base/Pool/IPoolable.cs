@@ -7,7 +7,7 @@ namespace Base.Pool
     {
         public delegate void PoolReturnHandler(IPoolable poolable);
 
-        public void OnBeforeSpawn(bool isReused);
+        public void OnBeforeSpawn(bool isReused, int numActiveObjects);
         public event PoolReturnHandler OnPoolReturn;
 
         public GameObject gameObject { get; }

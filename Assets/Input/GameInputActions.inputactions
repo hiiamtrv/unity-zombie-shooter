@@ -215,6 +215,17 @@
                 },
                 {
                     "name": "",
+                    "id": "6447a77a-f137-48f9-a422-9d8c2ca51ba9",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "943dc586-fafb-4605-b8a0-47b6c7a95bbe",
                     "path": "<Keyboard>/r",
                     "interactions": "",

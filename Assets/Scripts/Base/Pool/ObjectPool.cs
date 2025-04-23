@@ -35,15 +35,8 @@ namespace Base.Pool
             IPoolable retrievePoolable;
             if (iterator < 0)
             {
-                retrievePoolable = Object.Instantiate(prefab.gameObject, Vector3.zero, Quaternion.identity)
-                    .GetComponent<IPoolable>();
-                if (root != null)
-                {
-                    SceneManager.MoveGameObjectToScene(retrievePoolable.gameObject, root.scene);
-                }
-
-                retrievePoolable.OnPoolReturn += ReturnToPool;
-                retrievePoolable.OnBeforeSpawn(false);
+                retrievePoolable = CreateNewOne();
+                retrievePoolable.OnBeforeSpawn(false, activeObjects.Count + 1);
 
                 if (ddol)
                 {
@@ -55,7 +48,7 @@ namespace Base.Pool
             else
             {
                 retrievePoolable = idleObjects[iterator--];
-                retrievePoolable.OnBeforeSpawn(true);
+                retrievePoolable.OnBeforeSpawn(true, activeObjects.Count + 1);
                 AssignReuse(retrievePoolable, autoActive);
             }
 
@@ -113,6 +106,29 @@ namespace Base.Pool
         private void AssignReuse(IPoolable obj, bool autoActive)
         {
             if (autoActive) obj.gameObject.SetActive(true);
+        }
+
+        private IPoolable CreateNewOne()
+        {
+            var poolable = Object.Instantiate(prefab.gameObject, Vector3.zero, Quaternion.identity)
+                .GetComponent<IPoolable>();
+            if (root != null)
+            {
+                SceneManager.MoveGameObjectToScene(poolable.gameObject, root.scene);
+            }
+
+            poolable.OnPoolReturn += ReturnToPool;
+            return poolable;
+        }
+
+        public void GenerateReserved(int num)
+        {
+            for (var i = 0; i < num; i++)
+            {
+                if (iterator >= idleObjects.Length) return;
+                var poolable = CreateNewOne();
+                AssignIdle(poolable);
+            }
         }
     }
 }

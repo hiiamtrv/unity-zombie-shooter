@@ -38,7 +38,7 @@ namespace Game.Bullet
         private BulletConfig bulletConfig;
         private Rigidbody rb;
 
-        public void OnBeforeSpawn(bool isReused)
+        public void OnBeforeSpawn(bool isReused, int numActiveObjects)
         {
             if (isReused) GetComponentInChildren<TrailRenderer>().Clear();
         }

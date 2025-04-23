@@ -159,6 +159,8 @@ MonoBehaviour:
   disposeStartDelay: 1
   disposeTime: 3
   maxPooledObjects: 4
+  skinnedMeshRenderer: {fileID: 515760521849740894}
+  skinQualityConfig: {fileID: 11400000, guid: 37c6ce3e1a0f18248bc7fda3f2d6170a, type: 2}
 --- !u!114 &9099300848768612408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,7 +197,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 4
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 1
   m_ObstacleAvoidanceType: 1
 --- !u!1001 &4165179942232460456
 PrefabInstance:
@@ -334,8 +336,17 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 957eec3e6a552c1409d83683cd883f99, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 3c48a6e5c0c983d4592992a3654c526e, type: 3}
+      propertyPath: m_CullingMode
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c48a6e5c0c983d4592992a3654c526e, type: 3}
+--- !u!137 &515760521849740894 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3479922615588753652, guid: 3c48a6e5c0c983d4592992a3654c526e, type: 3}
+  m_PrefabInstance: {fileID: 5232212618952700242}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &1870709144537615555 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 3c48a6e5c0c983d4592992a3654c526e, type: 3}

@@ -3152,6 +3152,18 @@ PrefabInstance:
       propertyPath: m_NavMeshData
       value: 
       objectReference: {fileID: 23800000, guid: 65e349d3d50f7bb4782b4c78b8e23306, type: 2}
+    - target: {fileID: 3931112451233766169, guid: 7ef437949633c434182224a0679366d0, type: 3}
+      propertyPath: generatePreservedActions.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931112451233766169, guid: 7ef437949633c434182224a0679366d0, type: 3}
+      propertyPath: generatePreservedActions.Array.data[1].amount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931112451233766169, guid: 7ef437949633c434182224a0679366d0, type: 3}
+      propertyPath: generatePreservedActions.Array.data[1].prefab
+      value: 
+      objectReference: {fileID: 4530181980909048458, guid: aca5a50b7daeb754c979479eb387e7fd, type: 3}
     - target: {fileID: 3931112451950056992, guid: 7ef437949633c434182224a0679366d0, type: 3}
       propertyPath: levelSeconds
       value: 180

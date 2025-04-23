@@ -173,6 +173,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPoolManager: {fileID: 3931112452094601513}
   audioSystem: {fileID: 3089238250248244209}
+  generatePreservedActions:
+  - prefab: {fileID: 4530181980909048458, guid: aa6c9e9b63d895e4eaf8bc3bfc64a5c4, type: 3}
+    amount: 128
 --- !u!1 &3931112451950056998
 GameObject:
   m_ObjectHideFlags: 0

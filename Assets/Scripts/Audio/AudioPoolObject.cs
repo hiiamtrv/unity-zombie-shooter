@@ -13,7 +13,7 @@ namespace Audio
         [SerializeField]
         private AudioSource source;
 
-        public void OnBeforeSpawn(bool isReused)
+        public void OnBeforeSpawn(bool isReused, int numActiveObjects)
         {
         }
 

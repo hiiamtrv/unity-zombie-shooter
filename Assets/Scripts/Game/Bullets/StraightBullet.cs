@@ -26,7 +26,7 @@ namespace Game.Bullet
         private float maxSqrDistance;
         private Vector3 originalPos;
 
-        public void OnBeforeSpawn(bool isReused)
+        public void OnBeforeSpawn(bool isReused, int numActiveObjects)
         {
             if (isReused) GetComponentInChildren<TrailRenderer>().Clear();
         }

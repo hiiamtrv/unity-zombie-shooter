@@ -23,7 +23,7 @@ MonoBehaviour:
   raysPerShot: 4
   raySpreadAngle: 30
   bulletConfig:
-    damage: 15
-    critRate: 8
-    critMultiplier: 1.2
+    damage: 80
+    critRate: 0.5
+    critMultiplier: 2
     maxFlyDistance: 60

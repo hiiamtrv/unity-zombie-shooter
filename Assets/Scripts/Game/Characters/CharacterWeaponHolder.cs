@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using Game.Interfaces;
+using Game.SkinPool;
 using UnityEngine;
 
 namespace Game.Characters
 {
-    public class CharacterWeaponHolder : MonoBehaviour
+    public class CharacterWeaponHolder : MonoBehaviour, IVisualPoolObjectConsumer
     {
         private ICharacterInput characterInput;
 
@@ -80,8 +81,20 @@ namespace Game.Characters
 
         private void EquipCurrentWeaponModel()
         {
+            if (animator == null) return;
+            
             var handTransform = animator.GetBoneTransform(HumanBodyBones.RightHand);
             CurrentWeapon.AssignWeaponTransformOnHand(handTransform);
+        }
+
+        public void LoadVisualPoolObject(VisualPoolObject visual)
+        {
+            animator = visual.Animator;
+        }
+
+        public void UnloadVisualPoolObject()
+        {
+            animator = null;
         }
     }
 }

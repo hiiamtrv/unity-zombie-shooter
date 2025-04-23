@@ -1,13 +1,17 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 
 namespace Game.Characters.Zombie
 {
     [Serializable]
-    public struct ZombieSkinQualityItem
+    public class ZombieSkinQualityItem
     {
         public int maxAmount;
         public SkinQuality skinQuality;
+        public ShadowCastingMode shadowCastingMode;
+        public bool receiveShadows;
     }
 
     [CreateAssetMenu(fileName = "ZombieSkinQualityConfig", menuName = "Configs/ZombieSkinQuality", order = 0)]
@@ -17,12 +21,12 @@ namespace Game.Characters.Zombie
         private ZombieSkinQualityItem[] qualityItems;
 
         [SerializeField]
-        private SkinQuality defaultSkinQuality;
+        private ZombieSkinQualityItem defaultSkinQuality;
 
         private int minThreshold = -1;
         private int maxThreshold = -1;
         
-        public SkinQuality GlobalSkinQuality { get; private set; }
+        public ZombieSkinQualityItem GlobalSkinQuality { get; private set; }
 
         public void RecalculateSkinQuality(int numZombies)
         {
@@ -37,7 +41,7 @@ namespace Game.Characters.Zombie
                     continue;
                 }
 
-                GlobalSkinQuality = qualityItem.skinQuality;
+                GlobalSkinQuality = qualityItem;
                 maxThreshold = qualityItem.maxAmount;
                 return;
             }

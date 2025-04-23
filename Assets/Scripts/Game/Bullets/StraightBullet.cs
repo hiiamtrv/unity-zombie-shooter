@@ -43,7 +43,7 @@ namespace Game.Bullet
 
         public event IPoolable.PoolReturnHandler OnPoolReturn;
         public bool DDOL => true;
-        public int PoolCapacity => maxPooledObjects;
+        public int PoolNumPooledObject => maxPooledObjects;
 
         private void OnTriggerEnter(Collider other)
         {

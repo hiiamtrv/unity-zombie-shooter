@@ -21,7 +21,7 @@ namespace Base.Pool
 
             var ddol = forceCreateDDOl ?? sample.DDOL;
             var spawnRootIfNotDDOL = ddol ? null : gameObject;
-            pool = new ObjectPool(sample, ddol, sample.PoolCapacity, spawnRootIfNotDDOL);
+            pool = new ObjectPool(sample, ddol, sample.PoolNumPooledObject, spawnRootIfNotDDOL);
             if (ddol)
             {
                 globalPool.Add(sample, pool);

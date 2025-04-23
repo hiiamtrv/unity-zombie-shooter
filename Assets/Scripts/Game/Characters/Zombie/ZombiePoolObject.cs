@@ -1,12 +1,14 @@
 ﻿using System;
 using Base.Locator;
 using Base.Pool;
+using Game.Interfaces;
+using Game.SkinPool;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Game.Characters.Zombie
 {
-    public class ZombiePoolObject : MonoBehaviour, IPoolable
+    public class ZombiePoolObject : MonoBehaviour, IPoolable, IVisualPoolObjectConsumer
     {
         [SerializeField]
         private UnityEvent OnReused;
@@ -16,33 +18,38 @@ namespace Game.Characters.Zombie
 
         [SerializeField]
         private float disposeTime;
-        
+
         [SerializeField]
         private int maxPooledObjects;
-        
-        [SerializeField]
-        private SkinnedMeshRenderer skinnedMeshRenderer;
-        
+
+
         [SerializeField]
         private ZombieSkinQualityConfig skinQualityConfig;
+
+        private SkinnedMeshRenderer skinnedMeshRenderer;
 
         private bool isDisposing;
         private float cooldown;
         private static int numActiveZombies = 0;
-        
+        private ZombieSkinQualityItem currentItem;
+
         public void OnBeforeSpawn(bool isReused, int numActiveObjects)
         {
             isDisposing = false;
             OnReused?.Invoke();
-            
+
             numActiveZombies++;
             skinQualityConfig.RecalculateSkinQuality(numActiveZombies);
-            Debug.Log($"Update skin quality {numActiveObjects} {skinQualityConfig.GlobalSkinQuality}");
         }
 
         public event IPoolable.PoolReturnHandler OnPoolReturn;
         public bool DDOL => false;
-        public int PoolCapacity => maxPooledObjects;
+        public int PoolNumPooledObject => maxPooledObjects;
+
+        private void OnEnable()
+        {
+            FetchAndApplyQualityItem();
+        }
 
         public void StartDisposeZombie()
         {
@@ -59,17 +66,37 @@ namespace Game.Characters.Zombie
                 {
                     numActiveZombies--;
                     skinQualityConfig.RecalculateSkinQuality(numActiveZombies);
-                    
+
                     OnPoolReturn?.Invoke(this);
                 }
             }
-            else
+            else 
             {
-                if (skinnedMeshRenderer.quality != skinQualityConfig.GlobalSkinQuality)
+                if (currentItem != skinQualityConfig.GlobalSkinQuality)
                 {
-                    skinnedMeshRenderer.quality = skinQualityConfig.GlobalSkinQuality;
+                    FetchAndApplyQualityItem();
                 }
             }
+        }
+
+        private void FetchAndApplyQualityItem()
+        {
+            currentItem = skinQualityConfig.GlobalSkinQuality;
+            
+            if (skinnedMeshRenderer == null) return;
+            skinnedMeshRenderer.quality = currentItem.skinQuality;
+            skinnedMeshRenderer.shadowCastingMode = currentItem.shadowCastingMode;
+            skinnedMeshRenderer.receiveShadows = currentItem.receiveShadows;
+        }
+
+        public void LoadVisualPoolObject(VisualPoolObject visual)
+        {
+            skinnedMeshRenderer = visual.skinnedMeshRenderer;
+        }
+
+        public void UnloadVisualPoolObject()
+        {
+            skinnedMeshRenderer = null;
         }
     }
 }

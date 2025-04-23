@@ -2,12 +2,13 @@
 using Base.Locator;
 using Game.Bullet;
 using Game.Interfaces;
+using Game.SkinPool;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Game.Characters
 {
-    public class CharacterActor : MonoBehaviour, IDamageable
+    public class CharacterActor : MonoBehaviour, IDamageable, IVisualPoolObjectConsumer
     {
         private static readonly int AnimSpeedRatioZ = Animator.StringToHash("SpeedRatioZ");
         private static readonly int AnimSpeedRatioX = Animator.StringToHash("SpeedRatioX");
@@ -25,13 +26,13 @@ namespace Game.Characters
         private float paralyzedTimeOnHit;
 
         [SerializeField]
-        private UnityEvent onDeath;
-
-        [SerializeField]
         private AudioClip hitSound;
 
         [SerializeField]
         private AudioClip dieSound;
+
+        [SerializeField]
+        private UnityEvent onDeath;
 
         private ICharacterInput characterInput;
         private Rigidbody rb;
@@ -84,12 +85,15 @@ namespace Game.Characters
 
         private void LateUpdate()
         {
-            var localVelocity = transform.InverseTransformVector(characterInput.Velocity);
-            var isAttacking = characterInput.IsAttacking;
-            animator.SetFloat(AnimSpeedRatioZ, localVelocity.z);
-            animator.SetFloat(AnimSpeedRatioX, localVelocity.x);
-            animator.SetBool(AnimIsAttacking, isAttacking);
-            animator.SetBool(AnimIsDead, IsDead());
+            if (animator != null)
+            {
+                var localVelocity = transform.InverseTransformVector(characterInput.Velocity);
+                var isAttacking = characterInput.IsAttacking;
+                animator.SetFloat(AnimSpeedRatioZ, localVelocity.z);
+                animator.SetFloat(AnimSpeedRatioX, localVelocity.x);
+                animator.SetBool(AnimIsAttacking, isAttacking);
+                animator.SetBool(AnimIsDead, IsDead());
+            }
         }
 
         public bool CanHit(GameObject dmgSource)
@@ -101,7 +105,7 @@ namespace Game.Characters
         {
             var isAliveBeforeHit = !IsDead();
             health -= damageData.damage;
-            animator.SetTrigger(AnimHit);
+            animator?.SetTrigger(AnimHit);
 
             if (isAliveBeforeHit)
             {
@@ -117,7 +121,7 @@ namespace Game.Characters
                     SetParalyzedCountdown(paralyzedTimeOnHit);
                 }
             }
-            
+
             //should not go outside if clause because dead player must not receive damage
         }
 
@@ -143,10 +147,19 @@ namespace Game.Characters
             health = config.initialHealth;
         }
 
-
         public float GetMoveSpeed()
         {
             return IsDead() || paralyzedCountdown > 0 ? 0f : config.moveSpeed;
+        }
+
+        public void LoadVisualPoolObject(VisualPoolObject visual)
+        {
+            animator = visual.Animator;
+        }
+
+        public void UnloadVisualPoolObject()
+        {
+            animator = null;
         }
     }
 }

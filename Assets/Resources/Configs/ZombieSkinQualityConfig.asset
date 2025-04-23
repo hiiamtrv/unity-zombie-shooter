@@ -13,8 +13,20 @@ MonoBehaviour:
   m_Name: ZombieSkinQualityConfig
   m_EditorClassIdentifier: 
   qualityItems:
-  - maxAmount: 20
+  - maxAmount: 15
     skinQuality: 0
-  - maxAmount: 40
+    shadowCastingMode: 1
+    receiveShadows: 1
+  - maxAmount: 30
     skinQuality: 2
-  defaultSkinQuality: 1
+    shadowCastingMode: 2
+    receiveShadows: 1
+  - maxAmount: 60
+    skinQuality: 1
+    shadowCastingMode: 0
+    receiveShadows: 1
+  defaultSkinQuality:
+    maxAmount: 0
+    skinQuality: 1
+    shadowCastingMode: 0
+    receiveShadows: 0

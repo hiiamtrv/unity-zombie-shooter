@@ -19,7 +19,7 @@ namespace Audio
 
         public event IPoolable.PoolReturnHandler OnPoolReturn;
         public bool DDOL => true;
-        public int PoolCapacity => poolSize;
+        public int PoolNumPooledObject => poolSize;
 
         private void OnEnable()
         {

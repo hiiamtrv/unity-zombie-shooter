@@ -131,6 +131,8 @@ namespace Game
             SceneEndUI.IsWin = false;
             SceneEndUI.BackSceneName = currSceneName;
             SceneLoader.SceneLoader.Instance.LoadScene(currSceneName, "SceneEnd");
+            
+            Locator<ObjectPoolManager>.Instance.ReturnGlobalPools();
         }
 
         private void WinGame()

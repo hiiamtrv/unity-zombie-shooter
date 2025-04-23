@@ -225,7 +225,7 @@ MonoBehaviour:
   spawnTimer:
     initialSpawnsPerSecond: 1
     spawnIncreaseInterval: 5
-    spawnIncreaseStep: 0.1
+    spawnIncreaseStep: 0.05
   spawnPointChoices:
   - gameObject: {fileID: 0}
     weight: 1

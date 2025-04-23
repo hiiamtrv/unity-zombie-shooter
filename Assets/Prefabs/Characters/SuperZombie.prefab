@@ -215,7 +215,6 @@ MonoBehaviour:
   prefab: {fileID: 5999276985791659094, guid: 1da1827d684551d44aad157b1e41f63d, type: 3}
   placeHolderMesh: {fileID: 1288564920125985501}
   initialInactiveCountdown: 3
-  collider: {fileID: 4530181980909048457}
 --- !u!1001 &4165179942232460456
 PrefabInstance:
   m_ObjectHideFlags: 0

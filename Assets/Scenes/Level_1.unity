@@ -2084,6 +2084,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 23800000, guid: a300c21f9ef4d434b9bc50771877107b, type: 2}
     - target: {fileID: 3931112451233766169, guid: 7ef437949633c434182224a0679366d0, type: 3}
+      propertyPath: generatePreservedActions.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931112451233766169, guid: 7ef437949633c434182224a0679366d0, type: 3}
+      propertyPath: generatePreservedActions.Array.data[1].amount
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931112451233766169, guid: 7ef437949633c434182224a0679366d0, type: 3}
+      propertyPath: generatePreservedActions.Array.data[1].prefab
+      value: 
+      objectReference: {fileID: 2991066276705364259, guid: 62ca08eb890bd9f4e80abbbdcc43cc64, type: 3}
+    - target: {fileID: 3931112451233766169, guid: 7ef437949633c434182224a0679366d0, type: 3}
       propertyPath: OnBootstrapperAwake.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -2101,7 +2113,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3931112451950056992, guid: 7ef437949633c434182224a0679366d0, type: 3}
       propertyPath: levelSeconds
-      value: 120
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931112451950056992, guid: 7ef437949633c434182224a0679366d0, type: 3}
+      propertyPath: spawnTimer.spawnIncreaseInterval
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931112451950056992, guid: 7ef437949633c434182224a0679366d0, type: 3}
+      propertyPath: spawnTimer.initialSpawnsPerSecond
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3931112451950056992, guid: 7ef437949633c434182224a0679366d0, type: 3}
       propertyPath: spawnPointChoices.Array.data[0].gameObject

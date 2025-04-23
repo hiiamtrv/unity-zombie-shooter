@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8432949d0deb45c8b2257f072a094c3a, type: 3}
-  m_Name: EnemyLayer
+  m_Name: PlayerDamagableLayer
   m_EditorClassIdentifier: 
   layerMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 4608

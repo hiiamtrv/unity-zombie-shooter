@@ -60,7 +60,8 @@ namespace Base.Pool
         {
             foreach (var obj in activeObjects)
             {
-                AssignIdle(obj);
+                var success = AssignIdle(obj);
+                if (!success) Object.Destroy(obj.gameObject);
             }
 
             activeObjects.Clear();
@@ -71,14 +72,8 @@ namespace Base.Pool
             if (activeObjects.Contains(obj))
             {
                 activeObjects.Remove(obj);
-                if (iterator >= idleObjects.Length)
-                {
-                    Object.Destroy(obj.gameObject);
-                }
-                else
-                {
-                    AssignIdle(obj);
-                }
+                var success = AssignIdle(obj);
+                if (!success) Object.Destroy(obj.gameObject);
             }
         }
 
@@ -97,10 +92,12 @@ namespace Base.Pool
             iterator = -1;
         }
 
-        private void AssignIdle(IPoolable obj)
+        private bool AssignIdle(IPoolable obj)
         {
+            if (iterator >= idleObjects.Length - 1) return false;
             idleObjects[++iterator] = obj;
             obj.gameObject.SetActive(false);
+            return true;
         }
 
         private void AssignReuse(IPoolable obj, bool autoActive)
@@ -125,6 +122,7 @@ namespace Base.Pool
         {
             for (var i = 0; i < num; i++)
             {
+                if (idleObjects.Length >= num) return;
                 if (iterator >= idleObjects.Length) return;
                 var poolable = CreateNewOne();
                 AssignIdle(poolable);

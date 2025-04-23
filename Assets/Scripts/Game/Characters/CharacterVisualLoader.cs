@@ -25,10 +25,17 @@ namespace Game.Characters
         private bool isUsingVisual;
         private float inactiveCountdown;
 
+        private static Vector3 offscreenVector = new Vector3(9999, 9999, 9999);
+
         private void Awake()
         {
             isUsingVisual = false;
-            consumers = gameObject.GetComponents<IVisualPoolObjectConsumer>();
+        }
+
+        private void Start()
+        {
+            consumers = GetComponents<IVisualPoolObjectConsumer>();
+            Debug.Log($"Num consumers {consumers.Length}");
         }
 
         private void Update()
@@ -55,9 +62,10 @@ namespace Game.Characters
                     inactiveCountdown = initialInactiveCountdown;
                 }
 
-                currentVisual.transform.localPosition = Vector3.zero;
-                currentVisual.transform.localRotation = Quaternion.identity;
-                currentVisual.gameObject.SetActive(true); //ensure visual has valid state before shown
+                currentVisual.transform.SetPositionAndRotation(
+                    transform.position,
+                    transform.rotation
+                );
             }
             else
             {
@@ -76,9 +84,10 @@ namespace Game.Characters
 
             if (currentVisual != null)
             {
-                currentVisual.transform.SetParent(transform.root);
+                currentVisual.ReturnToPool();
+                currentVisual.transform.position = offscreenVector;
+                currentVisual.runtimeOwner = null;
                 currentVisual = null;
-
                 //broadcast for consumer
                 foreach (var consumer in consumers)
                 {
@@ -101,7 +110,8 @@ namespace Game.Characters
 
             var pool = sys.GetOrCreatePool(prefab);
             currentVisual = (VisualPoolObject)pool.RetrieveFromPool(out _, false);
-            currentVisual.transform.SetParent(transform);
+            currentVisual.runtimeOwner = gameObject;
+            currentVisual.gameObject.SetActive(true); //ensure visual has valid state before shown
 
             //broadcast for consumers
             foreach (var consumer in consumers)

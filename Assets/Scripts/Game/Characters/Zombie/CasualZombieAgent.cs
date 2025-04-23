@@ -9,16 +9,13 @@ using UnityEngine.AI;
 
 namespace Game.Characters.Zombie
 {
-    public class CasualZombieAgent : MonoBehaviour, IVisualPoolObjectConsumer
+    public class CasualZombieAgent : MonoBehaviour
     {
         [SerializeField]
         private ZombieAgentConfig agentConfig;
         
         [SerializeField]
         private BehaviorTree tree;
-
-        [SerializeField]
-        private bool isSeen;
 
         private Vector3? wanderPoint;
         private Collider playerCol;
@@ -28,7 +25,6 @@ namespace Game.Characters.Zombie
         private float height;
 
         private CharacterAgentInput input;
-        private bool isChasing;
 
         private void Awake()
         {
@@ -56,7 +52,6 @@ namespace Game.Characters.Zombie
                         .Do(() =>
                         {
                             wanderPoint = null;
-                            isChasing = false;
                             return TaskStatus.Success;
                         })
                         .Selector()
@@ -87,8 +82,6 @@ namespace Game.Characters.Zombie
 
         private void OnEnable()
         {
-            isChasing = true;
-            isSeen = false;
             SnapToNavMesh();
         }
 
@@ -99,8 +92,6 @@ namespace Game.Characters.Zombie
 
         private void Update()
         {
-            if (!isSeen) return;
-            
             // Reset tick stats
             input.SetAttacking(false);
             agent.speed = actor.GetMoveSpeed();
@@ -116,8 +107,6 @@ namespace Game.Characters.Zombie
         private TaskStatus ResetStats()
         {
             wanderPoint = null;
-            isChasing = false;
-            isSeen = false;
             return TaskStatus.Success;
         }
 
@@ -134,16 +123,6 @@ namespace Game.Characters.Zombie
                 agent.transform.position = hit.position;
                 agent.Warp(hit.position); 
             }
-        }
-
-        public void LoadVisualPoolObject(VisualPoolObject visual)
-        {
-            isSeen = true;
-        }
-
-        public void UnloadVisualPoolObject()
-        {
-            isSeen = false;
         }
     }
 }

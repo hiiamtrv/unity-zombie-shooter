@@ -24,7 +24,7 @@ namespace Game.Bullet
         private GameLayerConfig environmentLayer;
 
         [SerializeField]
-        private GameLayerConfig enemyLayer;
+        private GameLayerConfig playerDamagableLayer;
         
         [SerializeField]
         private GameObject hitAirborneFx;
@@ -76,11 +76,10 @@ namespace Game.Bullet
         private void CastZoneDamage(SphereCollider damageZone)
         {
             var radius = damageZone.radius;
-            var targets = Physics.OverlapSphere(transform.position, radius, enemyLayer.LayerMask);
+            var targets = Physics.OverlapSphere(damageZone.bounds.center, radius, playerDamagableLayer.LayerMask);
 
             foreach (var target in targets)
             {
-                if (Physics.Linecast(transform.position, target.transform.position, environmentLayer.LayerMask)) continue;
                 if (target.TryGetComponent(out IDamageable damageable) && damageable.CanHit(gameObject))
                 {
                     var dmg = bulletConfig.GetDamage();
